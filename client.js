@@ -1,13 +1,15 @@
-const client = net.createConnection({port: 5000}, () => {
-    console.log('connected');
+const net = require("net")
+
+const client = net.createConnection({port:3112}, () => {
+    console.log("Welcome to the chat!") 
 });
 
-client.on('exit', () => {
-    console.log('client disconnected');
-});
+client.setEncoding("utf-8")
 
-client.setEncoding('utf8'); 
-
-client.on('data', data => {
+client.on("data",data => {
     console.log(data)
-})
+});
+
+process.stdin.on("data", (data) => {
+    client.write(data)
+});
